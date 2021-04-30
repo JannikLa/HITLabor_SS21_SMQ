@@ -11,11 +11,16 @@ To make it easy to upload every program to the 16 ESP32s, all codes are in seper
 The only thing that needs to be changed for the different pixels is the include here in the main.cpp file
 */
 
+const char ssid[] = "JuergenWalter";
+const char pass[] = "44873763559236747268";
+const char MQTT_BROKER_ADDRESS[] = "192.168.188.100";
+
+
 //-----------------------------
 // pixel_column_row.h
-// 1_1      2_1     3_1     4_1
-// 1_2      2_2     3_2     4_2
-// 1_3      2_3     3_3     4_3
-// 1_4      2_4     3_4     4_4
+// 1_1  y    2_1  y   3_1  n   4_1  n       y: Programm Hochegladen&beschriftet
+// 1_2  y    2_2  y   3_2  n   4_2  n       n: To do
+// 1_3  y    2_3  y   3_3  n   4_3  n
+// 1_4  y    2_4  n   3_4  n   4_4  n
 //-----------------------------
-#include "pixel_1_1.h"
+#include "pixel_2_4.h"

@@ -34,9 +34,9 @@
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 //---------------------------Defines Wifi and broker Connection ------------------------------
-const char ssid[] = "JuergenWalter";
-const char pass[] = "44873763559236747268";
-const char MQTT_BROKER_ADDRESS[] = "192.168.188.100";
+extern const char ssid[];
+extern const char pass[];
+extern const char MQTT_BROKER_ADDRESS[];
 
 //---------------------------Defines Variables and Flags ------------------------------
 String prevArray[3];

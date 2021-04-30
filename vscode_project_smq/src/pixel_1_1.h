@@ -34,9 +34,9 @@
 Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 //---------------------------Defines Wifi and broker Connection ------------------------------
-const char ssid[] = "JuergenWalter";
-const char pass[] = "44873763559236747268";
-const char MQTT_BROKER_ADDRESS[] = "192.168.188.100";
+extern const char ssid[];
+extern const char pass[];
+extern const char MQTT_BROKER_ADDRESS[];
 
 //---------------------------Defines Variables and Flags ------------------------------
 String prevArray[3];
@@ -217,7 +217,7 @@ void singlepixel(String &input)
   }
 }
 
-/*
+
 void lightshow1()
 {
   // function to display lightshow1
@@ -225,82 +225,6 @@ void lightshow1()
   theaterChase(strip.Color(127,  127,   127), 50); // White, half brightness
   theaterChase(strip.Color(75, 0, 130), 50); // Purple, half brightness
   
-}
-*/
-
-void lightshow1()
-{
-  unsigned long T_start = 0;
-  unsigned long T_1 = 3.2*1000;
-  unsigned long T_2 = 8.2*1000;
-  unsigned long T_3 = 15*1000;
-
-  bool fadeup = false;
-  int b = 0;
-  T_start = millis();
-  //erstes einfaden
-  for (b = 0; b<200; b++)
-  {
-    for(int i=0; i<LED_COUNT; i++)
-    {
-      strip.setPixelColor(i, strip.Color(0,204,204));
-      strip.setBrightness(b);
-      strip.show();
-    }
-    delay(T_1/200);
-  }
-  while(millis()<T_start+T_2)
-  {
-      strip.setBrightness(b);
-      strip.show();
-      delay(20);
-      if (fadeup==true){
-        b++;
-        if(b>250){
-          fadeup=false;
-        }
-      }
-      else{
-        b--;
-        if(b<10){
-          fadeup=true;
-        }
-      }
-
-  }
-  for(int i=0; i<LED_COUNT; i++)
-  {
-    strip.setPixelColor(i, strip.Color(204,102,0));
-    strip.setBrightness(b);
-    strip.show();
-  }
-  while(millis()<T_start+T_3)
-  {
-      strip.setBrightness(b);
-      strip.show();
-      delay(20);
-      if (fadeup==true){
-        b++;
-        if(b>250){
-          fadeup=false;
-        }
-      }
-      else{
-        b--;
-        if(b<10){
-          fadeup=true;
-        }
-      }
-
-  }
-    for(int i=0; i<LED_COUNT; i++)
-  {
-    strip.setPixelColor(i, strip.Color(255,51,153));
-    strip.setBrightness(b);
-    strip.show();
-  }
-  delay(10*1000);
-
 }
 
 

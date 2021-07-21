@@ -63,6 +63,11 @@ void lightshow3();
 void singlecontrol();
 void singlepixel(String &input);
 void set_pixel_black();
+void set_pixel_red();
+void set_pixel_green();
+void set_pixel_blue();
+void set_pixel_yellow();
+void set_pixel_purple();
 void theaterChase(uint32_t color, int wait);
 
 //Function gets called on receiving a message via MQTT
@@ -220,11 +225,154 @@ void singlepixel(String &input)
 void lightshow1()
 {
   // function to display lightshow1
+  /*
   theaterChase(strip.Color(127, 0, 0), 50); // Red, half brightness
   theaterChase(strip.Color(127,  127,   127), 50); // White, half brightness
   theaterChase(strip.Color(75, 0, 130), 50); // Purple, half brightness
+  */
+ clock_t start;
+double D=0;
+start=clock();
+while(D<30.7)
+{
+  lightshow2();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(2200);
+set_pixel_red();
+delay(2000);
+while(D<65.7)
+{
+  lightshow2();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(2300);
+set_pixel_red();
+delay(2000);
+while(D<82.5)
+{
+  lightshow2();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(2200);
+set_pixel_red();
+delay(2000);
+while(D<135)
+{
+lightshow2();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+while(D<143.5)
+{
+lightshow3();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(1000);
+while(D<153)
+{
+lightshow2();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(100);
+while(D<161)
+{
+lightshow3();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(250);
+while(D<169.5)
+{
+lightshow2();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(2000);
+while(D<198)                                             
+{
+  for(int i=0;i<3;i++)                                    // Dreimal  Roter Wellenfront links<->rechts
+  {
+   if(D>=198)
+  {break;}
+  set_pixel_red();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+  }
+  for(int j=0;j<3;j++)                                      // Dreimal Blauer Wellenfront unten <-> oben
+  {
+    if(D>=198)
+  break;
+    set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_blue();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_blue();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+  
+  }
+  for(int j=0;j<3;j++)                                      // Dreimal Grüner Wellenfront links <-> rechts
+  {
+     if(D>=198)
+  {break;}
+    set_pixel_green();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+  }
+    for(int j=0;j<3;j++)                                      // Dreimal Gelber Wellenfront unten <-> oben
+  {
+    if(D>=198)
+    {break;}
+    set_pixel_black();
+    delay(100);
+    set_pixel_black();
+    delay(100);
+    set_pixel_yellow();
+    delay(100);
+    set_pixel_black();
+    delay(100);
+    set_pixel_yellow();
+    delay(100);
+    set_pixel_black();
+    delay(100);
+    D=(clock()-start)/(double)CLOCKS_PER_SEC;
+  }
   
 }
+  for(int i=0; i<LED_COUNT; i++) 
+  { 
+    strip.setPixelColor(i, strip.Color(250,250,250));         //  Set pixel's color white
+    strip.show();
+  }
+  delay(2000);
+  set_pixel_black();
+lightshow_1 = false;
+}
+
 
 void lightshow2()
 {
@@ -326,7 +474,51 @@ void set_pixel_black()
     strip.show();
   }
 }
-
+void set_pixel_red()
+{
+  // function to set all pixels red 
+  for(int i=0; i<LED_COUNT; i++) 
+  { 
+    strip.setPixelColor(i, strip.Color(255,0,0));         //  Set pixel's color (in RAM)
+    strip.show();
+  }
+}
+void set_pixel_green()
+{
+  // function to set all pixels green 
+  for(int i=0; i<LED_COUNT; i++) 
+  { 
+    strip.setPixelColor(i, strip.Color(0,255,0));         //  Set pixel's color (in RAM)
+    strip.show();
+  }
+}
+void set_pixel_blue()
+{
+  // function to set all pixels blue 
+  for(int i=0; i<LED_COUNT; i++) 
+  { 
+    strip.setPixelColor(i, strip.Color(0,0,255));         //  Set pixel's color (in RAM)
+    strip.show();
+  }
+}
+void set_pixel_yellow()
+{
+  // function to set all pixels yellow 
+  for(int i=0; i<LED_COUNT; i++) 
+  { 
+    strip.setPixelColor(i, strip.Color(255,255,0));         //  Set pixel's color (in RAM)
+    strip.show();
+  }
+}
+void set_pixel_purple()
+{
+  // function to set all pixels purple 
+  for(int i=0; i<LED_COUNT; i++) 
+  { 
+    strip.setPixelColor(i, strip.Color(243,12,204));         //  Set pixel's color (in RAM)
+    strip.show();
+  }
+}
 void theaterChase(uint32_t color, int wait) 
 {
   for(int a=0; a<10; a++) 

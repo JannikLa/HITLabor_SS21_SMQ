@@ -27,11 +27,13 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Arduino.h>
+#include <cstdio>
+#include <ctime>
 
 //------------------------Defines for Neo-Pixel ring ------------------------------
 #define LED_PIN   5  // Which pin on the Arduino is connected to the NeoPixels? // On a Trinket or Gemma we suggest changing this to 1:
 #define LED_COUNT 64 // How many NeoPixels are attached to the Arduino?
-Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRBW + NEO_KHZ800);
+Adafruit_NeoPixel strip(LED_COUNT, LED_PIN, NEO_GRB + NEO_KHZ800);
 
 //---------------------------Defines Wifi and broker Connection ------------------------------
 extern const char ssid[];
@@ -50,7 +52,7 @@ WiFiClient net;
 MQTTClient client(25000); //sets maximum message-size to ~25kB
 
 //-------------------------------Defines MQTT topics------------------------------
-const char TOPIC_PIXEL[] = "sensors/pixels/4_2";
+const char TOPIC_PIXEL[] = "sensors/pixels/4_1";
 
 //-----------------------------Function Prototypes----------------------------------
 //Function to establish connection to WiFi and MQTT
@@ -63,6 +65,11 @@ void lightshow3();
 void singlecontrol();
 void singlepixel(String &input);
 void set_pixel_black();
+void set_pixel_red();
+void set_pixel_green();
+void set_pixel_blue();
+void set_pixel_yellow();
+void set_pixel_purple();
 void theaterChase(uint32_t color, int wait);
 
 //Function gets called on receiving a message via MQTT
@@ -219,15 +226,158 @@ void singlepixel(String &input)
 
 void lightshow1()
 {
-  // function to display lightshow1 
-  theaterChase(strip.Color(75, 0, 130), 50); // Purple, half brightness
-  theaterChase(strip.Color(127,  127,   127), 50); // White, half brightness
-  theaterChase(strip.Color(127, 0, 0), 50); // Red, half brightness
+  // function to display lightshow1
+  //theaterChase(strip.Color(255, 127, 0), 50); // Orange, half brightness
+  //theaterChase(strip.Color(127,  127,   127), 50); // White, half brightness
+  //theaterChase(strip.Color(0, 255, 0), 50); // Green, half brightness
+ clock_t start;
+double D=0;
+start=clock();
+while(D<30.7)
+{
+  lightshow2();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
 }
+delay(2200);
+set_pixel_red();
+delay(2000);
+while(D<65.7)
+{
+  lightshow2();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(2300);
+set_pixel_red();
+delay(2000);
+while(D<82.5)
+{
+  lightshow2();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(2200);
+set_pixel_red();
+delay(2000);
+while(D<135)
+{
+lightshow2();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+while(D<143.5)
+{
+lightshow3();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(1000);
+while(D<153)
+{
+lightshow2();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(100);
+while(D<161)
+{
+lightshow3();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(250);
+while(D<169.5)
+{
+lightshow2();
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+}
+delay(2000);
+while(D<198)                                             
+{
+  for(int i=0;i<3;i++)                                    // Dreimal  Roter Wellenfront links<->rechts
+  {
+   if(D>=198)
+  {break;}
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_red();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+  }
+  for(int j=0;j<3;j++)                                      // Dreimal Blauer Wellenfront unten <-> oben
+  {
+    if(D>=198)
+  break;
+    set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_blue();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_blue();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+  
+  }
+  for(int j=0;j<3;j++)                                      // Dreimal Grüner Wellenfront links <-> rechts
+  {
+     if(D>=198)
+  {break;}
+    set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_green();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  set_pixel_black();
+ delay(100);
+  D=(clock()-start)/(double)CLOCKS_PER_SEC;
+  }
+    for(int j=0;j<3;j++)                                      // Dreimal Gelber Wellenfront unten <-> oben
+  {
+    if(D>=198)
+    {break;}
+    set_pixel_black();
+    delay(100);
+    set_pixel_black();
+    delay(100);
+    set_pixel_yellow();
+    delay(100);
+    set_pixel_black();
+    delay(100);
+    set_pixel_yellow();
+    delay(100);
+    set_pixel_black();
+    delay(100);
+    D=(clock()-start)/(double)CLOCKS_PER_SEC;
+  }
+  
+}
+  for(int i=0; i<LED_COUNT; i++) 
+  { 
+    strip.setPixelColor(i, strip.Color(250,250,250));         //  Set pixel's color (in RAM)
+    strip.show();
+  }
+  delay(2000);
+  set_pixel_black();
+lightshow_1 = false;
+}
+
+
 
 void lightshow2()
 {
-  // function to display lightshow2
+   // function to display lightshow2
   int fadeVal=0, fadeMax=100;
   int rainbowLoops=3;
   // Hue of first pixel runs 'rainbowLoops' complete loops through the color
@@ -255,7 +405,7 @@ void lightshow2()
     }
 
     strip.show();
-    delay(3);
+    delay(2);
 
     if(firstPixelHue < 65536) 
     {                              // First loop,
@@ -275,9 +425,11 @@ void lightshow2()
 void lightshow3()
 {
   // function to display lightshow3
+  // function to display lightshow3
+  // function to display lightshow3
   for(int i=0; i<LED_COUNT; i++)
     {
-      strip.setPixelColor(i, strip.Color(108,247,8));
+      strip.setPixelColor(i, strip.Color(243,12,204));
       strip.setBrightness(250);
       strip.show();
     }
@@ -291,7 +443,7 @@ void lightshow3()
 
       for(int i=0; i<LED_COUNT; i++)
     {
-      strip.setPixelColor(i, strip.Color(108,247,8));
+      strip.setPixelColor(i, strip.Color(243,12,204));
       strip.setBrightness(1);
       strip.show();
     }
@@ -323,7 +475,51 @@ void set_pixel_black()
     strip.show();
   }
 }
-
+void set_pixel_red()
+{
+  // function to set all pixels red 
+  for(int i=0; i<LED_COUNT; i++) 
+  { 
+    strip.setPixelColor(i, strip.Color(255,0,0));         //  Set pixel's color (in RAM)
+    strip.show();
+  }
+}
+void set_pixel_green()
+{
+  // function to set all pixels green 
+  for(int i=0; i<LED_COUNT; i++) 
+  { 
+    strip.setPixelColor(i, strip.Color(0,255,0));         //  Set pixel's color (in RAM)
+    strip.show();
+  }
+}
+void set_pixel_blue()
+{
+  // function to set all pixels blue 
+  for(int i=0; i<LED_COUNT; i++) 
+  { 
+    strip.setPixelColor(i, strip.Color(0,0,255));         //  Set pixel's color (in RAM)
+    strip.show();
+  }
+}
+void set_pixel_yellow()
+{
+  // function to set all pixels yellow 
+  for(int i=0; i<LED_COUNT; i++) 
+  { 
+    strip.setPixelColor(i, strip.Color(255,255,0));         //  Set pixel's color (in RAM)
+    strip.show();
+  }
+}
+void set_pixel_purple()
+{
+  // function to set all pixels purple 
+  for(int i=0; i<LED_COUNT; i++) 
+  { 
+    strip.setPixelColor(i, strip.Color(243,12,204));         //  Set pixel's color (in RAM)
+    strip.show();
+  }
+}
 void theaterChase(uint32_t color, int wait) 
 {
   for(int a=0; a<10; a++) 
@@ -332,7 +528,7 @@ void theaterChase(uint32_t color, int wait)
     { //  'b' counts from 0 to 2...
       strip.clear();         //   Set all pixels in RAM to 0 (off)
       // 'c' counts up from 'b' to end of strip in steps of 3...
-      for(int c=b; c<strip.numPixels(); c += 3)
+      for(int c=b; c<strip.numPixels(); c += 3) 
       {
         strip.setPixelColor(c, color); // Set pixel 'c' to value 'color'
       }
@@ -345,7 +541,6 @@ void theaterChase(uint32_t color, int wait)
 void connect() 
 {
   //--------------------Connection to WiFi---------------
-  int i=0;
   log("Checking wifi");
  
   WiFi.begin(ssid, pass);

@@ -18,9 +18,9 @@ const char MQTT_BROKER_ADDRESS[] = "192.168.188.100";
 
 //-----------------------------
 // pixel_column_row.h
-// 1_1  y    2_1  y   3_1  n   4_1  n       y: Programm Hochegladen&beschriftet
-// 1_2  y    2_2  y   3_2  n   4_2  n       n: To do
-// 1_3  y    2_3  y   3_3  n   4_3  n
-// 1_4  y    2_4  n   3_4  n   4_4  n
+// 1_1  y    2_1  y   3_1  y   4_1  n       y: Programm Hochegladen&beschriftet
+// 1_2  y    2_2  y   3_2  y   4_2  n       n: To do
+// 1_3  y    2_3  y   3_3  y   4_3  n
+// 1_4  y    2_4  y   3_4  y   4_4  n
 //-----------------------------
-#include "pixel_2_4.h"
+#include "pixel_4_2.h"
